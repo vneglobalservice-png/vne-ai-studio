@@ -18,7 +18,20 @@
 <div class="tool"><div class="ico">🎨</div><b data-i="creative">Creative AI</b><small data-i="creativeSub">Explore artistic photo styles.</small></div>
 </div></section>
 <section class="panel" id="editor"><h2 class="section-title" data-i="editorTitle">Photo editor demo</h2><p class="sub" data-i="editorSub">Choose a photo to preview it. Demo effects run in your browser; connected AI services are not enabled yet.</p><div class="editor"><div class="drop"><div style="font-size:40px">📷</div><b data-i="uploadTitle">Upload your photo</b><p class="sub" data-i="uploadSub">Select a JPG, PNG or WebP image.</p><input id="file" type="file" accept="image/*"><img id="preview" class="preview" alt="Your photo preview" hidden></div><div><b data-i="adjust">Quick adjustments</b><p class="sub" data-i="adjustSub">Try a local preview effect.</p><div class="actions"><select id="effect"><option value="none">Original</option><option value="bright">Bright</option><option value="mono">Black & white</option><option value="warm">Warm</option></select><button class="btn" id="apply" data-i="apply">Apply preview</button><button class="btn secondary" id="reset" data-i="reset">Reset</button></div><p class="sub" style="margin-top:18px" data-i="privacy">Your selected image stays in this browser demo and is not uploaded to a server.</p></div></div></section>
-<section class="panel"><h2 class="section-title" data-i="plans">Simple plans</h2><p class="sub" data-i="plansSub">Suggested launch pricing. Payments are not connected in this prototype.</p><div class="plans"><div class="plan"><b>FREE</b><div class="price">₹0</div><ul><li data-i="basicEdit">Basic editing tools</li><li data-i="limited">Limited free usage</li><li data-i="ads">Ad-supported</li></ul></div><div class="plan featured"><div class="tag" data-i="popular">POPULAR</div><b>PREMIUM</b><div class="price">₹149<span style="font-size:13px;font-weight:500"> / month</span></div><ul><li data-i="moreCredits">More AI credits</li><li data-i="hd">HD exports</li><li data-i="noAds">Ad-free experience</li></ul></div><div class="plan"><b>YEARLY</b><div class="price">₹999<span style="font-size:13px;font-weight:500"> / year</span></div><ul><li data-i="premiumFeatures">Premium features</li><li data-i="yearlyCredits">Yearly credit allowance</li><li data-i="support">Priority support (planned)</li></ul></div></div></section>
+
+<section class="panel" id="ai-generate">
+<h2 class="section-title">✨ AI Photo Generation</h2>
+<p class="sub">Describe the image you want to create. This is the generation interface preview; a real image model and secure backend still need to be connected.</p>
+<label for="genPrompt"><b>Describe your image</b></label>
+<textarea id="genPrompt" rows="4" placeholder="Example: A cinematic professional portrait in a modern office, soft natural light..." style="width:100%;margin-top:9px;padding:13px;border:1px solid #dce2f1;border-radius:12px;font:inherit;resize:vertical"></textarea>
+<div class="actions" style="margin-top:12px">
+<select id="genStyle" aria-label="Image style"><option>Photorealistic</option><option>Studio portrait</option><option>3D illustration</option><option>Anime</option><option>Watercolor</option></select>
+<select id="genRatio" aria-label="Aspect ratio"><option>Square 1:1</option><option>Portrait 4:5</option><option>Landscape 16:9</option></select>
+<button class="btn" id="genButton">Prepare generation request</button>
+</div>
+<p id="genStatus" class="sub" role="status" style="margin-top:14px">AI generation is not connected yet. This demo does not generate or upload an image.</p>
+</section>
+\n<section class="panel"><h2 class="section-title" data-i="plans">Simple plans</h2><p class="sub" data-i="plansSub">Suggested launch pricing. Payments are not connected in this prototype.</p><div class="plans"><div class="plan"><b>FREE</b><div class="price">₹0</div><ul><li data-i="basicEdit">Basic editing tools</li><li data-i="limited">Limited free usage</li><li data-i="ads">Ad-supported</li></ul></div><div class="plan featured"><div class="tag" data-i="popular">POPULAR</div><b>PREMIUM</b><div class="price">₹149<span style="font-size:13px;font-weight:500"> / month</span></div><ul><li data-i="moreCredits">More AI credits</li><li data-i="hd">HD exports</li><li data-i="noAds">Ad-free experience</li></ul></div><div class="plan"><b>YEARLY</b><div class="price">₹999<span style="font-size:13px;font-weight:500"> / year</span></div><ul><li data-i="premiumFeatures">Premium features</li><li data-i="yearlyCredits">Yearly credit allowance</li><li data-i="support">Priority support (planned)</li></ul></div></div></section>
 <div class="foot">© 2026 VNE AI Studio · A VNE Global Service initiative</div></main>
 <script>
 const dict={
@@ -31,4 +44,13 @@ ar:{hero:'صورك برؤية جديدة مع الذكاء الاصطناعي.',
 const lang=document.getElementById('lang');lang.addEventListener('change',()=>{const d=dict[lang.value];document.documentElement.lang=lang.value;document.documentElement.dir=lang.value==='ar'?'rtl':'ltr';document.querySelectorAll('[data-i]').forEach(el=>{const v=d[el.dataset.i];if(v)el.textContent=v})});
 const file=document.getElementById('file'),img=document.getElementById('preview'),effect=document.getElementById('effect');let original='';file.addEventListener('change',()=>{const f=file.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{original=r.result;img.src=original;img.hidden=false};r.readAsDataURL(f)});
 document.getElementById('apply').onclick=()=>{if(!original){alert('Choose a photo first.');return}const v=effect.value;img.style.filter=v==='bright'?'brightness(1.18) contrast(1.06)':v==='mono'?'grayscale(1)':v==='warm'?'sepia(.28) saturate(1.25)':'none'};document.getElementById('reset').onclick=()=>{effect.value='none';img.style.filter='none'};
-</script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}</script></body></html>
+</script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}</script><script>
+const genButton=document.getElementById('genButton');
+if(genButton){genButton.addEventListener('click',()=>{
+ const prompt=document.getElementById('genPrompt').value.trim();
+ const status=document.getElementById('genStatus');
+ if(!prompt){status.textContent='Please enter a description first.';return;}
+ status.textContent='Prompt prepared. Real image generation still needs an image-generation provider and a secure backend. Do not put private API keys in this website.';
+});}
+</script>
+</body></html>

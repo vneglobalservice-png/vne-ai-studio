@@ -1,13 +1,11 @@
 {
   "name": "VNE AI Studio",
   "short_name": "VNE AI",
-  "description": "AI photo studio by VNE Global Service",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f5f7fc",
   "theme_color": "#101a3a",
-  "orientation": "portrait",
   "icons": [
     {
       "src": "icon-192.png",
