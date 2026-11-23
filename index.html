@@ -73,17 +73,45 @@ if(genButton){
     body:JSON.stringify({prompt:fullPrompt})
    });
    if(!response.ok){const message=await response.text();throw new Error(message||('Request failed: '+response.status));}
-   const imageBlob=await response.blob();
-   if(!imageBlob.type.startsWith('image/')) throw new Error('The API did not return an image. Check the Cloudflare Worker.');
-   if(generatedImageUrl) URL.revokeObjectURL(generatedImageUrl);
-   generatedImageUrl=URL.createObjectURL(imageBlob);
-   const image=document.createElement('img');
-   image.id='generatedImage';image.alt='AI generated photo';image.src=generatedImageUrl;
-   const download=document.createElement('a');
-   download.id='downloadGenerated';download.href=generatedImageUrl;
-   download.download='vne-ai-studio-generated.png';download.textContent='Download image';
-   status.textContent='Your AI image is ready!';
-   status.insertAdjacentElement('afterend',image);image.insertAdjacentElement('afterend',download);
+   
+const imageBlob = await response.blob();
+
+if (!imageBlob.type.startsWith("image/")) {
+  throw new Error("API did not return an image");
+}
+
+const bitmap = await createImageBitmap(imageBlob);
+const canvas = document.createElement("canvas");
+canvas.width = bitmap.width;
+canvas.height = bitmap.height;
+
+const ctx = canvas.getContext("2d");
+ctx.drawImage(bitmap, 0, 0);
+
+const jpgBlob = await new Promise(resolve =>
+  canvas.toBlob(resolve, "image/jpeg", 0.92)
+);
+
+if (!jpgBlob) throw new Error("JPG conversion failed");
+
+if (generatedImageUrl) URL.revokeObjectURL(generatedImageUrl);
+generatedImageUrl = URL.createObjectURL(jpgBlob);
+
+const image = document.createElement("img");
+image.id = "generatedImage";
+image.alt = "AI generated photo";
+image.src = generatedImageUrl;
+
+const download = document.createElement("a");
+download.id = "downloadGenerated";
+download.href = generatedImageUrl;
+download.download = "vne-ai-studio-generated.jpg";
+download.textContent = "Download JPG";
+
+status.textContent = "Your JPG image is ready!";
+status.insertAdjacentElement("afterend", image);
+image.insertAdjacentElement("afterend", download);
+
   }catch(error){
    status.textContent='Image generation failed: '+error.message+' — check the Worker deployment and AI binding.';
   }finally{genButton.disabled=false;genButton.textContent='Generate AI Photo';}
