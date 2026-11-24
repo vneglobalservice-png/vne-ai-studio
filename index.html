@@ -8,6 +8,15 @@
 @media(max-width:760px){.tools{grid-template-columns:repeat(2,1fr)}.editor{grid-template-columns:1fr}.plans{grid-template-columns:1fr}.hero{margin-top:35px}.panel{padding:17px}}
 </style></head>
 <body>
+ <div id="auth-box" class="panel" style="max-width:420px;margin:20px auto;">
+  <h2>Welcome to VNE AI Studio</h2>
+  <input id="auth-email" type="email" placeholder="Email address" style="width:100%;padding:12px;margin:8px 0;">
+  <input id="auth-password" type="password" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;">
+  <button class="btn" onclick="signUp()">Create Account</button>
+  <button class="btn" onclick="signIn()">Login</button>
+  <button class="btn" onclick="googleLogin()">Continue with Google</button>
+  <p id="auth-message" role="status"></p>
+</div>
 <header><div class="nav"><div class="brand">VNE <span>AI</span> STUDIO</div><select id="lang" aria-label="Language"><option value="en">English</option><option value="te">తెలుగు</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="ar">العربية</option></select></div>
 <div class="hero"><div class="eyebrow">CREATE • EDIT • ENHANCE</div><h1 data-i="hero">Your photos, reimagined with AI.</h1><p data-i="intro">A global photo studio for portraits, creative edits and professional images. Start with the demo editor below.</p><button class="btn" onclick="document.getElementById('editor').scrollIntoView({behavior:'smooth'})" data-i="start">Start creating</button></div></header>
 <main class="wrap">
@@ -118,4 +127,53 @@ image.insertAdjacentElement("afterend", download);
  });
 }
 </script>
+ 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://bkszggsfnuchwolklofk.supabase.co",
+  "sb_publishable_4txgi8IpAfRNiW8YFWi4iw__pHDBtQ6"
+);
+
+window.signUp = async function () {
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const message = document.getElementById("auth-message");
+
+  if (!email || !password) {
+    message.textContent = "Enter email and password.";
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.signUp({ email, password });
+  message.textContent = error ? error.message :
+    "Signup submitted! Check your email for confirmation.";
+};
+
+window.signIn = async function () {
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const message = document.getElementById("auth-message");
+
+  const { error } = await supabaseClient.auth.signInWithPassword({
+    email, password
+  });
+
+  message.textContent = error ? error.message : "Login successful!";
+};
+
+window.googleLogin = async function () {
+  const { error } = await supabaseClient.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: "https://vneglobalservice-png.github.io/vne-ai-studio/"
+    }
+  });
+
+  if (error) {
+    document.getElementById("auth-message").textContent = error.message;
+  }
+};
+</script>
+
 </body></html>
