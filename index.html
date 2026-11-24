@@ -1,179 +1,44 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101a3a"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><title>VNE AI Studio</title>
-<style>
-:root{--navy:#101a3a;--blue:#3867ff;--violet:#8057ed;--gold:#e6b85c;--ink:#17213e;--muted:#68738e;--bg:#f5f7fc;--card:#fff}*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink)}header{background:linear-gradient(120deg,#101a3a,#253b80 65%,#5b45a8);color:#fff;padding:18px max(5vw,20px) 58px}.nav{display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{font-weight:900;font-size:21px;letter-spacing:.3px}.brand span{color:#f3c86d}.nav select{background:#ffffff18;color:#fff;border:1px solid #ffffff55;padding:9px 12px;border-radius:10px}.nav option{color:#111}.hero{max-width:1100px;margin:48px auto 0}.eyebrow{color:#f2cc78;font-weight:700;letter-spacing:2px;font-size:12px}.hero h1{font-size:clamp(34px,6vw,62px);line-height:1.04;margin:12px 0}.hero p{color:#dce4ff;max-width:620px;font-size:17px;line-height:1.6}.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:750;cursor:pointer;background:linear-gradient(100deg,var(--blue),var(--violet));color:white}.btn.secondary{background:#eef1ff;color:#2c48a0}.wrap{max-width:1100px;margin:-28px auto 60px;padding:0 18px}.panel{background:var(--card);border:1px solid #e7eaf3;border-radius:20px;box-shadow:0 14px 40px #1929570c;padding:22px;margin-bottom:20px}.section-title{font-size:22px;margin:0 0 7px}.sub{color:var(--muted);margin:0 0 18px;line-height:1.5}.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tool{border:1px solid #e8ebf5;border-radius:15px;padding:16px;background:#fff}.tool b{display:block;margin:8px 0 4px}.tool small{color:var(--muted);line-height:1.4}.ico{font-size:25px}.editor{display:grid;grid-template-columns:1fr 1fr;gap:20px}.drop{min-height:260px;border:2px dashed #c8d2f0;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:#fafbff}.preview{width:100%;max-height:320px;object-fit:contain;border-radius:12px;margin-top:12px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.actions select{padding:10px;border:1px solid #dce2f1;border-radius:10px;background:#fff}.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.plan{border:1px solid #e6eaf5;border-radius:16px;padding:18px}.plan.featured{border:2px solid #6379ef;background:#f8f9ff}.price{font-size:30px;font-weight:900;margin:8px 0}.plan ul{padding-left:18px;color:var(--muted);line-height:1.9;font-size:14px}.tag{font-size:11px;font-weight:800;color:#4d5fd0}.foot{text-align:center;color:var(--muted);font-size:13px;padding:25px}
-@media(max-width:760px){.tools{grid-template-columns:repeat(2,1fr)}.editor{grid-template-columns:1fr}.plans{grid-template-columns:1fr}.hero{margin-top:35px}.panel{padding:17px}}
-</style></head>
-<body>
- <div id="auth-box" class="panel" style="max-width:420px;margin:20px auto;">
-  <h2>Welcome to VNE AI Studio</h2>
-  <input id="auth-email" type="email" placeholder="Email address" style="width:100%;padding:12px;margin:8px 0;">
-  <input id="auth-password" type="password" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;">
-  <button class="btn" onclick="signUp()">Create Account</button>
-  <button class="btn" onclick="signIn()">Login</button>
-  <button class="btn" onclick="googleLogin()">Continue with Google</button>
-  <p id="auth-message" role="status"></p>
-</div>
-<header><div class="nav"><div class="brand">VNE <span>AI</span> STUDIO</div><select id="lang" aria-label="Language"><option value="en">English</option><option value="te">తెలుగు</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="ar">العربية</option></select></div>
-<div class="hero"><div class="eyebrow">CREATE • EDIT • ENHANCE</div><h1 data-i="hero">Your photos, reimagined with AI.</h1><p data-i="intro">A global photo studio for portraits, creative edits and professional images. Start with the demo editor below.</p><button class="btn" onclick="document.getElementById('editor').scrollIntoView({behavior:'smooth'})" data-i="start">Start creating</button></div></header>
-<main class="wrap">
-<section class="panel"><h2 class="section-title" data-i="features">Explore AI tools</h2><p class="sub" data-i="featuresSub">A simple starting point for your creative studio.</p><div class="tools">
-<div class="tool"><div class="ico">✨</div><b data-i="enhance">AI Enhance</b><small data-i="enhanceSub">Improve clarity and brightness.</small></div>
-<div class="tool"><div class="ico">🪄</div><b data-i="background">Background Studio</b><small data-i="backgroundSub">Prepare images for new backgrounds.</small></div>
-<div class="tool"><div class="ico">👔</div><b data-i="portrait">Pro Portraits</b><small data-i="portraitSub">Create polished profile photos.</small></div>
-<div class="tool"><div class="ico">🎨</div><b data-i="creative">Creative AI</b><small data-i="creativeSub">Explore artistic photo styles.</small></div>
-</div></section>
-<section class="panel" id="editor"><h2 class="section-title" data-i="editorTitle">Photo editor demo</h2><p class="sub" data-i="editorSub">Choose a photo to preview it. Demo effects run in your browser; connected AI services are not enabled yet.</p><div class="editor"><div class="drop"><div style="font-size:40px">📷</div><b data-i="uploadTitle">Upload your photo</b><p class="sub" data-i="uploadSub">Select a JPG, PNG or WebP image.</p><input id="file" type="file" accept="image/*"><img id="preview" class="preview" alt="Your photo preview" hidden></div><div><b data-i="adjust">Quick adjustments</b><p class="sub" data-i="adjustSub">Try a local preview effect.</p><div class="actions"><select id="effect"><option value="none">Original</option><option value="bright">Bright</option><option value="mono">Black & white</option><option value="warm">Warm</option></select><button class="btn" id="apply" data-i="apply">Apply preview</button><button class="btn secondary" id="reset" data-i="reset">Reset</button></div><p class="sub" style="margin-top:18px" data-i="privacy">Your selected image stays in this browser demo and is not uploaded to a server.</p></div></div></section>
-
-<section class="panel" id="ai-generate">
-<h2 class="section-title">✨ AI Photo Generation</h2>
-<p class="sub">Describe the image you want to create. This is the generation interface preview; a real image model and secure backend still need to be connected.</p>
-<label for="genPrompt"><b>Describe your image</b></label>
-<textarea id="genPrompt" rows="4" placeholder="Example: A cinematic professional portrait in a modern office, soft natural light..." style="width:100%;margin-top:9px;padding:13px;border:1px solid #dce2f1;border-radius:12px;font:inherit;resize:vertical"></textarea>
-<div class="actions" style="margin-top:12px">
-<select id="genStyle" aria-label="Image style"><option>Photorealistic</option><option>Studio portrait</option><option>3D illustration</option><option>Anime</option><option>Watercolor</option></select>
-<select id="genRatio" aria-label="Aspect ratio"><option>Square 1:1</option><option>Portrait 4:5</option><option>Landscape 16:9</option></select>
-<button class="btn" id="genButton">Prepare generation request</button>
-</div>
-<p id="genStatus" class="sub" role="status" style="margin-top:14px">AI generation is not connected yet. This demo does not generate or upload an image.</p>
-</section>
-<section class="panel"><h2 class="section-title" data-i="plans">Simple plans</h2><p class="sub" data-i="plansSub">Suggested launch pricing. Payments are not connected in this prototype.</p><div class="plans"><div class="plan"><b>FREE</b><div class="price">₹0</div><ul><li data-i="basicEdit">Basic editing tools</li><li data-i="limited">Limited free usage</li><li data-i="ads">Ad-supported</li></ul></div><div class="plan featured"><div class="tag" data-i="popular">POPULAR</div><b>PREMIUM</b><div class="price">₹149<span style="font-size:13px;font-weight:500"> / month</span></div><ul><li data-i="moreCredits">More AI credits</li><li data-i="hd">HD exports</li><li data-i="noAds">Ad-free experience</li></ul></div><div class="plan"><b>YEARLY</b><div class="price">₹999<span style="font-size:13px;font-weight:500"> / year</span></div><ul><li data-i="premiumFeatures">Premium features</li><li data-i="yearlyCredits">Yearly credit allowance</li><li data-i="support">Priority support (planned)</li></ul></div></div></section>
-<div class="foot">© 2026 VNE AI Studio · A VNE Global Service initiative</div></main>
-<script>
-const dict={
-en:{hero:'Your photos, reimagined with AI.',intro:'A global photo studio for portraits, creative edits and professional images. Start with the demo editor below.',start:'Start creating',features:'Explore AI tools',featuresSub:'A simple starting point for your creative studio.',enhance:'AI Enhance',enhanceSub:'Improve clarity and brightness.',background:'Background Studio',backgroundSub:'Prepare images for new backgrounds.',portrait:'Pro Portraits',portraitSub:'Create polished profile photos.',creative:'Creative AI',creativeSub:'Explore artistic photo styles.',editorTitle:'Photo editor demo',editorSub:'Choose a photo to preview it. Demo effects run in your browser; connected AI services are not enabled yet.',uploadTitle:'Upload your photo',uploadSub:'Select a JPG, PNG or WebP image.',adjust:'Quick adjustments',adjustSub:'Try a local preview effect.',apply:'Apply preview',reset:'Reset',privacy:'Your selected image stays in this browser demo and is not uploaded to a server.',plans:'Simple plans',plansSub:'Suggested launch pricing. Payments are not connected in this prototype.',basicEdit:'Basic editing tools',limited:'Limited free usage',ads:'Ad-supported',popular:'POPULAR',moreCredits:'More AI credits',hd:'HD exports',noAds:'Ad-free experience',premiumFeatures:'Premium features',yearlyCredits:'Yearly credit allowance',support:'Priority support (planned)'},
-te:{hero:'మీ ఫోటోలకు AIతో కొత్త రూపం.',intro:'పోర్ట్రెయిట్‌లు, క్రియేటివ్ ఎడిటింగ్, ప్రొఫెషనల్ ఫోటోల కోసం గ్లోబల్ ఫోటో స్టూడియో.',start:'ప్రారంభించండి',features:'AI టూల్స్ చూడండి',featuresSub:'మీ క్రియేటివ్ స్టూడియోకు ప్రారంభం.',enhance:'AI మెరుగుదల',enhanceSub:'ఫోటో స్పష్టత, వెలుతురు మెరుగుపరచండి.',background:'బ్యాక్‌గ్రౌండ్ స్టూడియో',backgroundSub:'కొత్త బ్యాక్‌గ్రౌండ్‌ల కోసం ఫోటో సిద్ధం చేయండి.',portrait:'ప్రొఫెషనల్ పోర్ట్రెయిట్స్',portraitSub:'ప్రొఫైల్ ఫోటోలు తయారు చేయండి.',creative:'క్రియేటివ్ AI',creativeSub:'కళాత్మక ఫోటో స్టైల్స్ ప్రయత్నించండి.',editorTitle:'ఫోటో ఎడిటర్ డెమో',editorSub:'ఫోటో ఎంచుకుని ప్రివ్యూ చూడండి. ఇవి బ్రౌజర్‌లో పనిచేసే డెమో ఎఫెక్ట్స్ మాత్రమే.',uploadTitle:'మీ ఫోటో అప్‌లోడ్ చేయండి',uploadSub:'JPG, PNG లేదా WebP ఎంచుకోండి.',adjust:'త్వరిత మార్పులు',adjustSub:'లోకల్ ప్రివ్యూ ఎఫెక్ట్ ప్రయత్నించండి.',apply:'ప్రివ్యూ వర్తింపజేయి',reset:'రిసెట్',privacy:'మీ ఫోటో ఈ బ్రౌజర్‌లోనే ఉంటుంది; సర్వర్‌కు అప్‌లోడ్ కాదు.',plans:'సులభమైన ప్లాన్లు',plansSub:'ప్రారంభ ధరల సూచన. ఈ ప్రోటోటైప్‌లో చెల్లింపులు లేవు.',basicEdit:'ప్రాథమిక ఎడిటింగ్ టూల్స్',limited:'పరిమిత ఉచిత వినియోగం',ads:'ప్రకటనలతో',popular:'ప్రజాదరణ',moreCredits:'మరిన్ని AI క్రెడిట్లు',hd:'HD డౌన్‌లోడ్లు',noAds:'ప్రకటనలు లేవు',premiumFeatures:'ప్రీమియం ఫీచర్లు',yearlyCredits:'వార్షిక క్రెడిట్ పరిమితి',support:'ప్రాధాన్య సపోర్ట్ (తర్వాత)'},
-hi:{hero:'AI के साथ अपनी तस्वीरों को नया रूप दें।',intro:'पोर्ट्रेट, क्रिएटिव एडिट और प्रोफेशनल इमेज के लिए फोटो स्टूडियो।',start:'शुरू करें',features:'AI टूल देखें',featuresSub:'आपके क्रिएटिव स्टूडियो की शुरुआत।',enhance:'AI एन्हांस',enhanceSub:'स्पष्टता और रोशनी सुधारें।',background:'बैकग्राउंड स्टूडियो',backgroundSub:'नए बैकग्राउंड के लिए फोटो तैयार करें।',portrait:'प्रो पोर्ट्रेट',portraitSub:'बेहतर प्रोफाइल फोटो बनाएं।',creative:'क्रिएटिव AI',creativeSub:'कलात्मक फोटो स्टाइल आज़माएं।',editorTitle:'फोटो एडिटर डेमो',editorSub:'फोटो चुनकर प्रीव्यू देखें। ये ब्राउज़र डेमो इफेक्ट हैं।',uploadTitle:'फोटो अपलोड करें',uploadSub:'JPG, PNG या WebP चुनें।',adjust:'त्वरित बदलाव',adjustSub:'लोकल प्रीव्यू इफेक्ट आज़माएं।',apply:'प्रीव्यू लागू करें',reset:'रीसेट',privacy:'आपकी फोटो इसी ब्राउज़र में रहती है।',plans:'आसान प्लान',plansSub:'प्रस्तावित कीमतें; भुगतान अभी जुड़ा नहीं है।',basicEdit:'बेसिक एडिटिंग टूल',limited:'सीमित मुफ्त उपयोग',ads:'विज्ञापनों सहित',popular:'लोकप्रिय',moreCredits:'अधिक AI क्रेडिट',hd:'HD एक्सपोर्ट',noAds:'विज्ञापन नहीं',premiumFeatures:'प्रीमियम सुविधाएं',yearlyCredits:'वार्षिक क्रेडिट',support:'प्राथमिकता सहायता (योजना में)'},
-es:{hero:'Tus fotos, reinventadas con IA.',intro:'Un estudio global para retratos, ediciones creativas e imágenes profesionales.',start:'Empezar',features:'Explorar herramientas IA',featuresSub:'El inicio de tu estudio creativo.',enhance:'Mejora IA',enhanceSub:'Mejora claridad y brillo.',background:'Estudio de fondos',backgroundSub:'Prepara imágenes para nuevos fondos.',portrait:'Retratos pro',portraitSub:'Crea fotos de perfil pulidas.',creative:'IA creativa',creativeSub:'Explora estilos artísticos.',editorTitle:'Demo del editor',editorSub:'Elige una foto para previsualizarla. Los efectos son una demo local.',uploadTitle:'Sube tu foto',uploadSub:'Elige JPG, PNG o WebP.',adjust:'Ajustes rápidos',adjustSub:'Prueba un efecto local.',apply:'Aplicar vista previa',reset:'Restablecer',privacy:'La imagen permanece en este navegador.',plans:'Planes sencillos',plansSub:'Precios sugeridos; los pagos aún no están conectados.',basicEdit:'Edición básica',limited:'Uso gratuito limitado',ads:'Con anuncios',popular:'POPULAR',moreCredits:'Más créditos IA',hd:'Exportaciones HD',noAds:'Sin anuncios',premiumFeatures:'Funciones premium',yearlyCredits:'Créditos anuales',support:'Soporte prioritario (previsto)'},
-fr:{hero:'Vos photos réinventées avec l’IA.',intro:'Un studio photo mondial pour portraits, retouches créatives et images professionnelles.',start:'Commencer',features:'Découvrir les outils IA',featuresSub:'Le début de votre studio créatif.',enhance:'Amélioration IA',enhanceSub:'Améliorez netteté et luminosité.',background:'Studio d’arrière-plan',backgroundSub:'Préparez vos images pour de nouveaux fonds.',portrait:'Portraits pro',portraitSub:'Créez des photos de profil soignées.',creative:'IA créative',creativeSub:'Explorez des styles artistiques.',editorTitle:'Démo de retouche photo',editorSub:'Choisissez une photo pour l’aperçu. Les effets sont une démo locale.',uploadTitle:'Importer votre photo',uploadSub:'Choisissez JPG, PNG ou WebP.',adjust:'Réglages rapides',adjustSub:'Essayez un effet local.',apply:'Appliquer l’aperçu',reset:'Réinitialiser',privacy:'Votre photo reste dans ce navigateur.',plans:'Offres simples',plansSub:'Tarifs proposés ; paiements non connectés.',basicEdit:'Outils de retouche de base',limited:'Usage gratuit limité',ads:'Avec publicités',popular:'POPULAIRE',moreCredits:'Plus de crédits IA',hd:'Exports HD',noAds:'Sans publicité',premiumFeatures:'Fonctions premium',yearlyCredits:'Crédits annuels',support:'Assistance prioritaire (prévue)'},
-ar:{hero:'صورك برؤية جديدة مع الذكاء الاصطناعي.',intro:'استوديو عالمي للصور الشخصية والتعديلات الإبداعية والصور الاحترافية.',start:'ابدأ الآن',features:'استكشف أدوات الذكاء الاصطناعي',featuresSub:'بداية استوديوك الإبداعي.',enhance:'تحسين بالذكاء الاصطناعي',enhanceSub:'تحسين الوضوح والإضاءة.',background:'استوديو الخلفيات',backgroundSub:'جهّز الصور لخلفيات جديدة.',portrait:'صور احترافية',portraitSub:'أنشئ صور ملفات شخصية أنيقة.',creative:'ذكاء اصطناعي إبداعي',creativeSub:'اكتشف أنماط الصور الفنية.',editorTitle:'تجربة محرر الصور',editorSub:'اختر صورة لمعاينتها. التأثيرات تجريبية وتعمل محلياً.',uploadTitle:'ارفع صورتك',uploadSub:'اختر JPG أو PNG أو WebP.',adjust:'تعديلات سريعة',adjustSub:'جرّب تأثيراً محلياً.',apply:'تطبيق المعاينة',reset:'إعادة ضبط',privacy:'تبقى صورتك في هذا المتصفح ولا تُرفع إلى خادم.',plans:'خطط بسيطة',plansSub:'أسعار مقترحة؛ الدفع غير متصل حالياً.',basicEdit:'أدوات تحرير أساسية',limited:'استخدام مجاني محدود',ads:'مع إعلانات',popular:'الأكثر شعبية',moreCredits:'رصيد ذكاء اصطناعي إضافي',hd:'تصدير عالي الدقة',noAds:'بدون إعلانات',premiumFeatures:'ميزات مميزة',yearlyCredits:'رصيد سنوي',support:'دعم ذو أولوية (مخطط)'}};
-const lang=document.getElementById('lang');lang.addEventListener('change',()=>{const d=dict[lang.value];document.documentElement.lang=lang.value;document.documentElement.dir=lang.value==='ar'?'rtl':'ltr';document.querySelectorAll('[data-i]').forEach(el=>{const v=d[el.dataset.i];if(v)el.textContent=v})});
-const file=document.getElementById('file'),img=document.getElementById('preview'),effect=document.getElementById('effect');let original='';file.addEventListener('change',()=>{const f=file.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{original=r.result;img.src=original;img.hidden=false};r.readAsDataURL(f)});
-document.getElementById('apply').onclick=()=>{if(!original){alert('Choose a photo first.');return}const v=effect.value;img.style.filter=v==='bright'?'brightness(1.18) contrast(1.06)':v==='mono'?'grayscale(1)':v==='warm'?'sepia(.28) saturate(1.25)':'none'};document.getElementById('reset').onclick=()=>{effect.value='none';img.style.filter='none'};
-</script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}</script><style>
-#generatedImage{display:block;max-width:100%;max-height:520px;object-fit:contain;margin-top:16px;border-radius:14px}
-#downloadGenerated{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:10px;background:#eef1ff;color:#2c48a0;font-weight:700;text-decoration:none}
-</style>
-<script>
-const genButton=document.getElementById('genButton');
-let generatedImageUrl='';
-if(genButton){
- genButton.textContent='Generate AI Photo';
- genButton.addEventListener('click',async()=>{
-  const prompt=document.getElementById('genPrompt').value.trim();
-  const status=document.getElementById('genStatus');
-  const style=document.getElementById('genStyle').value;
-  const ratio=document.getElementById('genRatio').value;
-  if(!prompt){status.textContent='Please enter a description first.';return;}
-  const fullPrompt=prompt+'. Style: '+style+'. Composition: '+ratio+'.';
-  genButton.disabled=true;
-  genButton.textContent='Generating...';
-  status.textContent='Generating your image. Please wait...';
-  const oldImage=document.getElementById('generatedImage');
-  const oldDownload=document.getElementById('downloadGenerated');
-  if(oldImage) oldImage.remove();
-  if(oldDownload) oldDownload.remove();
-  try{
-   const response=await fetch('https://vne-ai-studio-api.vneglobalservice.workers.dev/',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({prompt:fullPrompt})
-   });
-   if(!response.ok){const message=await response.text();throw new Error(message||('Request failed: '+response.status));}
-   
-const imageBlob = await response.blob();
-
-if (!imageBlob.type.startsWith("image/")) {
-  throw new Error("API did not return an image");
-}
-
-const bitmap = await createImageBitmap(imageBlob);
-const canvas = document.createElement("canvas");
-canvas.width = bitmap.width;
-canvas.height = bitmap.height;
-
-const ctx = canvas.getContext("2d");
-ctx.drawImage(bitmap, 0, 0);
-
-const jpgBlob = await new Promise(resolve =>
-  canvas.toBlob(resolve, "image/jpeg", 0.92)
-);
-
-if (!jpgBlob) throw new Error("JPG conversion failed");
-
-if (generatedImageUrl) URL.revokeObjectURL(generatedImageUrl);
-generatedImageUrl = URL.createObjectURL(jpgBlob);
-
-const image = document.createElement("img");
-image.id = "generatedImage";
-image.alt = "AI generated photo";
-image.src = generatedImageUrl;
-
-const download = document.createElement("a");
-download.id = "downloadGenerated";
-download.href = generatedImageUrl;
-download.download = "vne-ai-studio-generated.jpg";
-download.textContent = "Download JPG";
-
-status.textContent = "Your JPG image is ready!";
-status.insertAdjacentElement("afterend", image);
-image.insertAdjacentElement("afterend", download);
-
-  }catch(error){
-   status.textContent='Image generation failed: '+error.message+' — check the Worker deployment and AI binding.';
-  }finally{genButton.disabled=false;genButton.textContent='Generate AI Photo';}
- });
-}
-</script>
- 
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#17123c"><title>VNE AI Studio</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#0d0b1c;--panel:#17142b;--line:#302b4d;--purple:#743cff;--blue:#3987ff;--muted:#aaa6c2}*{box-sizing:border-box}body{margin:0;font:15px Inter,system-ui,Arial;background:linear-gradient(140deg,#100d29,#21134a 55%,#10182e);color:#fff;min-height:100vh}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:12px 17px;background:linear-gradient(100deg,var(--purple),#9b28ee);color:white;font-weight:700;cursor:pointer}button:disabled{opacity:.55;cursor:wait}.secondary{background:#292441;border:1px solid var(--line)}header{display:flex;justify-content:space-between;align-items:center;padding:18px max(5vw,18px);border-bottom:1px solid #ffffff18}.brand{font-size:21px;font-weight:900;letter-spacing:.5px}.brand span{color:#b9a4ff}.wrap{max-width:1180px;margin:auto;padding:28px 20px}.hero{padding:34px 0 25px}.eyebrow{color:#e8d36d;font-size:12px;font-weight:800;letter-spacing:2px}.hero h1{font-size:clamp(32px,5vw,58px);margin:10px 0}.muted{color:var(--muted);line-height:1.6}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.panel,.tool{background:#17142bea;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 15px 40px #0002}.tool{cursor:pointer}.tool:hover{border-color:#8764ff}.tool h3{margin:8px 0}.section{margin:18px 0}.editor{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.drop{min-height:280px;border:1px dashed #716a92;border-radius:16px;display:grid;place-items:center;padding:20px;text-align:center;background:#100d24}.preview{max-width:100%;max-height:480px;object-fit:contain;border-radius:12px}.controls{display:grid;gap:12px;align-content:start}input,select,textarea{width:100%;background:#0e0b20;color:white;border:1px solid var(--line);padding:12px;border-radius:10px}label{font-weight:700;font-size:13px}.row{display:flex;gap:10px;flex-wrap:wrap}.status{min-height:24px;color:#c7b8ff}.auth{max-width:430px;margin:22px auto}.hidden{display:none!important}a{color:#cbbaff}@media(max-width:760px){.editor{grid-template-columns:1fr}.wrap{padding:20px 14px}}
+</style></head><body>
+<header><div class="brand">VNE <span>AI</span> STUDIO</div><div class="row"><select id="lang" style="width:auto"><option>English</option><option>తెలుగు</option><option>हिन्दी</option><option>Español</option><option>العربية</option></select><button class="secondary" id="logout" hidden>Log out</button></div></header>
+<main class="wrap">
+<section class="panel auth" id="auth"><h2>Welcome to VNE AI Studio</h2><p class="muted">Sign in to access your creative studio.</p><label>Email</label><input id="email" type="email" placeholder="you@example.com"><label>Password</label><input id="password" type="password" placeholder="Password"><div class="row" style="margin-top:12px"><button id="signup">Create account</button><button id="login">Login</button></div><button class="secondary" id="google" style="margin-top:10px;width:100%">Continue with Google</button><p class="status" id="authStatus"></p></section>
+<div id="app" class="hidden">
+<section class="hero"><div class="eyebrow">CREATE · EDIT · ENHANCE</div><h1>Your photos, reimagined with AI.</h1><p class="muted">A global photo studio for portraits, creative edits and professional images.</p></section>
+<section class="grid section">
+<div class="tool" data-mode="enhance"><div>✨</div><h3>AI Enhance</h3><p class="muted">Improve image clarity and detail.</p></div>
+<div class="tool" data-mode="background"><div>🪄</div><h3>Background Studio</h3><p class="muted">Remove the background and download a transparent PNG.</p></div>
+<div class="tool" data-mode="portrait"><div>🧑‍💼</div><h3>Pro Portraits</h3><p class="muted">Create polished professional portraits.</p></div>
+<div class="tool" data-mode="creative"><div>🎨</div><h3>Creative AI</h3><p class="muted">Generate images from text prompts.</p></div>
+</section>
+<section class="panel section" id="editor"><h2 id="modeTitle">Photo Studio</h2><p class="muted" id="modeDesc">Upload an image to get started. Your original stays in your browser until you submit it for processing.</p>
+<div class="editor"><div class="drop"><div><div style="font-size:40px">📷</div><h3>Upload your photo</h3><p class="muted">JPG, PNG or WebP · Max 8 MB</p><input id="file" type="file" accept="image/png,image/jpeg,image/webp"><img id="preview" class="preview hidden" alt="Selected photo preview"></div></div>
+<div class="controls"><div id="promptWrap" class="hidden"><label for="prompt">Describe your image</label><textarea id="prompt" rows="4" placeholder="A cinematic professional portrait in a modern office, soft natural light..."></textarea><label>Style</label><select id="style"><option>Photorealistic</option><option>Studio portrait</option><option>3D illustration</option><option>Anime</option><option>Watercolor</option></select><label>Aspect ratio</label><select id="ratio"><option value="1:1">Square 1:1</option><option value="4:5">Portrait 4:5</option><option value="16:9">Landscape 16:9</option></select></div>
+<div id="adjustWrap"><label>Quick preview effect</label><select id="effect"><option value="none">Original</option><option value="grayscale(1)">Black & white</option><option value="brightness(1.15) contrast(1.08)">Brighten</option><option value="sepia(.65)">Warm vintage</option></select><button class="secondary" id="applyPreview">Apply preview</button></div>
+<div class="row"><button id="process">Remove background</button><button class="secondary" id="reset">Reset</button></div><a id="download" class="hidden" download="vne-ai-studio-result.png">Download result</a><p class="status" id="status" role="status"></p><img id="result" class="preview hidden" alt="Processed result"></div></div></section>
+</div></main>
 <script>
-const supabaseClient = window.supabase.createClient(
-  "https://bkszggsfnuchwolklofk.supabase.co",
-  "sb_publishable_4txgi8IpAfRNiW8YFWi4iw__pHDBtQ6"
-);
-
-window.signUp = async function () {
-  const email = document.getElementById("auth-email").value.trim();
-  const password = document.getElementById("auth-password").value;
-  const message = document.getElementById("auth-message");
-
-  if (!email || !password) {
-    message.textContent = "Enter email and password.";
-    return;
-  }
-
-  const { error } = await supabaseClient.auth.signUp({ email, password });
-  message.textContent = error ? error.message :
-    "Signup submitted! Check your email for confirmation.";
-};
-
-window.signIn = async function () {
-  const email = document.getElementById("auth-email").value.trim();
-  const password = document.getElementById("auth-password").value;
-  const message = document.getElementById("auth-message");
-
-  const { error } = await supabaseClient.auth.signInWithPassword({
-    email, password
-  });
-
-  message.textContent = error ? error.message : "Login successful!";
-};
-
-window.googleLogin = async function () {
-  const { error } = await supabaseClient.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: "https://vneglobalservice-png.github.io/vne-ai-studio/"
-    }
-  });
-
-  if (error) {
-    document.getElementById("auth-message").textContent = error.message;
-  }
-};
-</script>
-
-</body></html>
+const SUPABASE_URL="https://bkszggsfnuchwolklofk.supabase.co";
+sb_publishable_4txgi8IpAfRNiW8YFWi4iw__pHDBtQ6
+const API_URL="https://vne-ai-studio-api.vneglobalservice.workers.dev/";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const $=id=>document.getElementById(id);let file=null,mode="background",resultUrl=null;
+function setStatus(t){$("status").textContent=t}
+async function refresh(){const {data:{session}}=await sb.auth.getSession();$("auth").classList.toggle("hidden",!!session);$("app").classList.toggle("hidden",!session);$("logout").hidden=!session}
+$("signup").onclick=async()=>{const {error}=await sb.auth.signUp({email:$("email").value.trim(),password:$("password").value});$("authStatus").textContent=error?.message||"Signup submitted. Check your email to confirm."};
+$("login").onclick=async()=>{const {error}=await sb.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});$("authStatus").textContent=error?.message||"Login successful.";await refresh()};
+$("google").onclick=()=>sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.href}});
+$("logout").onclick=async()=>{await sb.auth.signOut();await refresh()};sb.auth.onAuthStateChange(()=>refresh());refresh();
+function setMode(m){mode=m;$("modeTitle").textContent={background:"Background Studio",enhance:"AI Enhance",portrait:"Pro Portraits",creative:"Creative AI"}[m];$("modeDesc").textContent=m==="background"?"Remove the subject background and export a transparent PNG.":m==="creative"?"Describe an image and generate it with AI.":m==="enhance"?"Send your image for AI enhancement.":"Prepare a professional portrait.";const gen=m==="creative";$("promptWrap").classList.toggle("hidden",!gen);$("adjustWrap").classList.toggle("hidden",gen);$("process").textContent={background:"Remove background",enhance:"Enhance photo",portrait:"Create portrait",creative:"Generate AI photo"}[m];setStatus("")}
+document.querySelectorAll(".tool").forEach(x=>x.onclick=()=>{setMode(x.dataset.mode);$("editor").scrollIntoView({behavior:"smooth"})});setMode("background");
+$("file").onchange=e=>{file=e.target.files[0];if(!file)return;if(file.size>8*1024*1024){setStatus("Please choose an image smaller than 8 MB.");file=null;return}const u=URL.createObjectURL(file);$("preview").src=u;$("preview").classList.remove("hidden");setStatus("Photo ready.")};
+$("applyPreview").onclick=()=>{$("preview").style.filter=$("effect").value;setStatus("Browser preview effect applied. This is not AI processing.")};
+$("reset").onclick=()=>{file=null;$("file").value="";$("preview").classList.add("hidden");$("result").classList.add("hidden");$("download").classList.add("hidden");$("preview").style.filter="none";if(resultUrl)URL.revokeObjectURL(resultUrl);setStatus("Reset complete.")};
+$("process").onclick=async()=>{try{if(mode!=="creative"&&!file){setStatus("Choose a photo first.");return}if(mode==="creative"&&!$("prompt").value.trim()){setStatus("Enter an image description first.");return}$("process").disabled=true;setStatus("Processing…");
+let response;if(mode==="creative"){response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"generate",prompt:$("prompt").value.trim()+", style: "+$("style").value+", aspect ratio: "+$("ratio").value})})}else{const fd=new FormData();fd.append("image",file);fd.append("action",mode==="background"?"remove-background":"enhance");response=await fetch(API_URL,{method:"POST",body:fd})}
+if(!response.ok){let msg=await response.text();throw new Error(msg||"Request failed ("+response.status+")")}const blob=await response.blob();if(!blob.type.startsWith("image/"))throw new Error("The service did not return an image.");if(resultUrl)URL.revokeObjectURL(resultUrl);resultUrl=URL.createObjectURL(blob);$("result").src=resultUrl;$("result").classList.remove("hidden");$("download").href=resultUrl;$("download").download=mode==="background"?"vne-background-removed.png":"vne-ai-studio-result.png";$("download").textContent="Download "+(mode==="background"?"transparent PNG":"image");$("download").classList.remove("hidden");setStatus("Done. Your image is ready.")}catch(e){setStatus("Could not process image: "+e.message)}finally{$("process").disabled=false}};
+</script></body></html>
