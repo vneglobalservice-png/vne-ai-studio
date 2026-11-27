@@ -66,8 +66,68 @@ function setStatus(t){$("status").textContent=t}
 async function refresh(){const {data:{session}}=await sb.auth.getSession();$("auth").classList.toggle("hidden",!!session);$("app").classList.toggle("hidden",!session);$("logout").hidden=!session}
 $("signup").onclick=async()=>{const {error}=await sb.auth.signUp({email:$("email").value.trim(),password:$("password").value});$("authStatus").textContent=error?.message||"Signup submitted. Check your email to confirm."};
 $("login").onclick=async()=>{const {error}=await sb.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});$("authStatus").textContent=error?.message||"Login successful.";await refresh()};
+  
+const forgotBtn = document.createElement("button");
+forgotBtn.id = "forgotPassword";
+forgotBtn.className = "secondary";
+forgotBtn.textContent = "Forgot Password?";
+forgotBtn.style.marginTop = "10px";
+$("auth").appendChild(forgotBtn);
+
+forgotBtn.onclick = async () => {
+  const email = $("email").value.trim();
+  if (!email) {
+    $("authStatus").textContent = "Enter your email first.";
+    return;
+  }
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: location.origin + location.pathname
+  });
+  $("authStatus").textContent = error
+    ? error.message
+    : "Password reset link sent. Check your email.";
+};
+
+const resetBox = document.createElement("div");
+resetBox.style.marginTop = "15px";
+resetBox.className = "hidden";
+resetBox.innerHTML = `
+  <h3>Set New Password</h3>
+  <input id="newPassword" type="password"
+    placeholder="Enter new password">
+  <button id="saveNewPassword" style="margin-top:10px">
+    Update Password
+  </button>
+`;
+$("auth").appendChild(resetBox);
+
+sb.auth.onAuthStateChange((event) => {
+  if (event === "PASSWORD_RECOVERY") {
+    $("auth").classList.remove("hidden");
+$("app").classList.add("hidden");
+    resetBox.classList.remove("hidden");
+    $("authStatus").textContent = "Enter your new password.";
+  }
+});
+
+$("saveNewPassword").onclick = async () => {
+  const password = $("newPassword").value;
+  if (password.length < 6) {
+    $("authStatus").textContent = "Password must be at least 6 characters.";
+    return;
+  }
+  const { error } = await sb.auth.updateUser({
+    password: password
+  });
+  $("authStatus").textContent = error
+    ? error.message
+    : "Password updated successfully. Please log in again.";
+};
+
 $("google").onclick=()=>sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.href}});
-$("logout").onclick=async()=>{await sb.auth.signOut();await refresh()};sb.auth.onAuthStateChange(()=>refresh());refresh();
+$("logout").onclick=async()=>{await sb.auth.signOut();await refresh()};sb.auth.onAuthStateChange((event)=>{
+  if(event!=="PASSWORD_RECOVERY") refresh();
+});refresh();
 function selectedEngine(){return document.querySelector('input[name="engine"]:checked')?.value||"free"}
 function setMode(m){mode=m;$("modeTitle").textContent={background:"Background Studio",enhance:"AI Enhance",portrait:"Pro Portraits",creative:"Creative AI"}[m];$("modeDesc").textContent=m==="background"?"Remove the background free on your device, or choose optional Premium Bria processing.":m==="creative"?"Describe an image and generate it with AI.":m==="enhance"?"Send your image for AI enhancement.":"Prepare a professional portrait.";const gen=m==="creative";$("promptWrap").classList.toggle("hidden",!gen);$("adjustWrap").classList.toggle("hidden",gen);$("backgroundOptions").classList.toggle("hidden",m!=="background");$("process").textContent=m==="background"?(selectedEngine()==="free"?"Remove background (Free)":"Remove background (Premium)"):{enhance:"Enhance photo",portrait:"Create portrait",creative:"Generate AI photo"}[m];setStatus("")}
 document.querySelectorAll(".tool").forEach(x=>x.onclick=()=>{setMode(x.dataset.mode);$("editor").scrollIntoView({behavior:"smooth"})});
