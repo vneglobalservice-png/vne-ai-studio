@@ -1,9 +1,33 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#17123c"><title>VNE AI Studio</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17123c">
+<title>VNE AI Studio</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#0d0b1c;--panel:#17142b;--line:#302b4d;--purple:#743cff;--blue:#3987ff;--muted:#aaa6c2}*{box-sizing:border-box}body{margin:0;font:15px Inter,system-ui,Arial;background:linear-gradient(140deg,#100d29,#21134a 55%,#10182e);color:#fff;min-height:100vh}button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:12px 17px;background:linear-gradient(100deg,var(--purple),#9b28ee);color:white;font-weight:700;cursor:pointer}button:disabled{opacity:.55;cursor:wait}.secondary{background:#292441;border:1px solid var(--line)}header{display:flex;justify-content:space-between;align-items:center;padding:18px max(5vw,18px);border-bottom:1px solid #ffffff18}.brand{font-size:21px;font-weight:900;letter-spacing:.5px}.brand span{color:#b9a4ff}.wrap{max-width:1180px;margin:auto;padding:28px 20px}.hero{padding:34px 0 25px}.eyebrow{color:#e8d36d;font-size:12px;font-weight:800;letter-spacing:2px}.hero h1{font-size:clamp(32px,5vw,58px);margin:10px 0}.muted{color:var(--muted);line-height:1.6}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.panel,.tool{background:#17142bea;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 15px 40px #0002}.tool{cursor:pointer}.tool:hover{border-color:#8764ff}.tool h3{margin:8px 0}.section{margin:18px 0}.editor{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.drop{min-height:280px;border:1px dashed #716a92;border-radius:16px;display:grid;place-items:center;padding:20px;text-align:center;background:#100d24}.preview{max-width:100%;max-height:480px;object-fit:contain;border-radius:12px}.controls{display:grid;gap:12px;align-content:start}input,select,textarea{width:100%;background:#0e0b20;color:white;border:1px solid var(--line);padding:12px;border-radius:10px}label{font-weight:700;font-size:13px}.row{display:flex;gap:10px;flex-wrap:wrap}.status{min-height:24px;color:#c7b8ff}.auth{max-width:430px;margin:22px auto}.hidden{display:none!important}a{color:#cbbaff}@media(max-width:760px){.editor{grid-template-columns:1fr}.wrap{padding:20px 14px}}
-</style></head><body>
+:root{--bg:#0d0b1c;--panel:#17142b;--line:#302b4d;--purple:#743cff;--blue:#3987ff;--muted:#aaa6c2}
+*{box-sizing:border-box}body{margin:0;font:15px Inter,system-ui,Arial;background:linear-gradient(140deg,#100d29,#21134a 55%,#10182e);color:#fff;min-height:100vh}
+button,input,select,textarea{font:inherit}button{border:0;border-radius:12px;padding:12px 17px;background:linear-gradient(100deg,var(--purple),#9b28ee);color:white;font-weight:700;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}.secondary{background:#292441;border:1px solid var(--line)}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px max(5vw,18px);border-bottom:1px solid #ffffff18}
+.brand{font-size:21px;font-weight:900;letter-spacing:.5px}.brand span{color:#b9a4ff}
+.wrap{max-width:1180px;margin:auto;padding:28px 20px}.hero{padding:34px 0 25px}
+.eyebrow{color:#e8d36d;font-size:12px;font-weight:800;letter-spacing:2px}.hero h1{font-size:clamp(32px,5vw,58px);margin:10px 0}
+.muted{color:var(--muted);line-height:1.6}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.panel,.tool{background:#17142bea;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 15px 40px #0002}
+.tool{cursor:pointer}.tool:hover{border-color:#8764ff}.tool h3{margin:8px 0}.section{margin:18px 0}
+.editor{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.drop{min-height:280px;border:1px dashed #716a92;border-radius:16px;display:grid;place-items:center;padding:20px;text-align:center;background:#100d24}
+.preview{max-width:100%;max-height:480px;object-fit:contain;border-radius:12px}.controls{display:grid;gap:12px;align-content:start}
+input,select,textarea{width:100%;background:#0e0b20;color:white;border:1px solid var(--line);padding:12px;border-radius:10px}
+label{font-weight:700;font-size:13px}.row{display:flex;gap:10px;flex-wrap:wrap}.status{min-height:24px;color:#c7b8ff}
+.auth{max-width:430px;margin:22px auto}.hidden{display:none!important}a{color:#cbbaff}
+.choice{padding:14px;border:1px solid var(--line);border-radius:12px;background:#100d24}.choice label{display:flex;gap:9px;align-items:center;cursor:pointer}.choice input{width:auto}
+@media(max-width:760px){.editor{grid-template-columns:1fr}.wrap{padding:20px 14px}}
+</style>
+</head>
+<body>
 <header><div class="brand">VNE <span>AI</span> STUDIO</div><div class="row"><select id="lang" style="width:auto"><option>English</option><option>తెలుగు</option><option>हिन्दी</option><option>Español</option><option>العربية</option></select><button class="secondary" id="logout" hidden>Log out</button></div></header>
 <main class="wrap">
 <section class="panel auth" id="auth"><h2>Welcome to VNE AI Studio</h2><p class="muted">Sign in to access your creative studio.</p><label>Email</label><input id="email" type="email" placeholder="you@example.com"><label>Password</label><input id="password" type="password" placeholder="Password"><div class="row" style="margin-top:12px"><button id="signup">Create account</button><button id="login">Login</button></div><button class="secondary" id="google" style="margin-top:10px;width:100%">Continue with Google</button><p class="status" id="authStatus"></p></section>
@@ -11,34 +35,90 @@
 <section class="hero"><div class="eyebrow">CREATE · EDIT · ENHANCE</div><h1>Your photos, reimagined with AI.</h1><p class="muted">A global photo studio for portraits, creative edits and professional images.</p></section>
 <section class="grid section">
 <div class="tool" data-mode="enhance"><div>✨</div><h3>AI Enhance</h3><p class="muted">Improve image clarity and detail.</p></div>
-<div class="tool" data-mode="background"><div>🪄</div><h3>Background Studio</h3><p class="muted">Remove the background and download a transparent PNG.</p></div>
+<div class="tool" data-mode="background"><div>🪄</div><h3>Background Studio</h3><p class="muted">Free on-device removal, with optional Premium Bria processing.</p></div>
 <div class="tool" data-mode="portrait"><div>🧑‍💼</div><h3>Pro Portraits</h3><p class="muted">Create polished professional portraits.</p></div>
 <div class="tool" data-mode="creative"><div>🎨</div><h3>Creative AI</h3><p class="muted">Generate images from text prompts.</p></div>
 </section>
-<section class="panel section" id="editor"><h2 id="modeTitle">Photo Studio</h2><p class="muted" id="modeDesc">Upload an image to get started. Your original stays in your browser until you submit it for processing.</p>
-<div class="editor"><div class="drop"><div><div style="font-size:40px">📷</div><h3>Upload your photo</h3><p class="muted">JPG, PNG or WebP · Max 8 MB</p><input id="file" type="file" accept="image/png,image/jpeg,image/webp"><img id="preview" class="preview hidden" alt="Selected photo preview"></div></div>
-<div class="controls"><div id="promptWrap" class="hidden"><label for="prompt">Describe your image</label><textarea id="prompt" rows="4" placeholder="A cinematic professional portrait in a modern office, soft natural light..."></textarea><label>Style</label><select id="style"><option>Photorealistic</option><option>Studio portrait</option><option>3D illustration</option><option>Anime</option><option>Watercolor</option></select><label>Aspect ratio</label><select id="ratio"><option value="1:1">Square 1:1</option><option value="4:5">Portrait 4:5</option><option value="16:9">Landscape 16:9</option></select></div>
+<section class="panel section" id="editor"><h2 id="modeTitle">Photo Studio</h2><p class="muted" id="modeDesc">Upload an image to get started. Free background removal runs in your browser.</p>
+<div class="editor">
+<div class="drop"><div><div style="font-size:40px">📷</div><h3>Upload your photo</h3><p class="muted">JPG, PNG or WebP · Max 8 MB</p><input id="file" type="file" accept="image/png,image/jpeg,image/webp"><img id="preview" class="preview hidden" alt="Selected photo preview"></div></div>
+<div class="controls">
+<div id="promptWrap" class="hidden"><label for="prompt">Describe your image</label><textarea id="prompt" rows="4" placeholder="A cinematic professional portrait in a modern office, soft natural light..."></textarea><label>Style</label><select id="style"><option>Photorealistic</option><option>Studio portrait</option><option>3D illustration</option><option>Anime</option><option>Watercolor</option></select><label>Aspect ratio</label><select id="ratio"><option value="1:1">Square 1:1</option><option value="4:5">Portrait 4:5</option><option value="16:9">Landscape 16:9</option></select></div>
+<div id="backgroundOptions">
+<label>Background removal engine</label>
+<div class="choice"><label><input type="radio" name="engine" value="free" checked> Free AI – runs on this device</label><p class="muted">Model downloads the first time. Photo stays in your browser.</p></div>
+<div class="choice"><label><input type="radio" name="engine" value="premium"> Premium – Cloudflare + Bria</label><p class="muted">Uses the configured Worker API and may incur per-image charges.</p></div>
+</div>
 <div id="adjustWrap"><label>Quick preview effect</label><select id="effect"><option value="none">Original</option><option value="grayscale(1)">Black & white</option><option value="brightness(1.15) contrast(1.08)">Brighten</option><option value="sepia(.65)">Warm vintage</option></select><button class="secondary" id="applyPreview">Apply preview</button></div>
-<div class="row"><button id="process">Remove background</button><button class="secondary" id="reset">Reset</button></div><a id="download" class="hidden" download="vne-ai-studio-result.png">Download result</a><p class="status" id="status" role="status"></p><img id="result" class="preview hidden" alt="Processed result"></div></div></section>
+<div class="row"><button id="process">Remove background (Free)</button><button class="secondary" id="reset">Reset</button></div>
+<a id="download" class="hidden" download="vne-ai-studio-result.png">Download result</a><p class="status" id="status" role="status"></p><img id="result" class="preview hidden" alt="Processed result">
+</div></div></section>
 </div></main>
-<script>
+<script type="module">
+import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.2";
 const SUPABASE_URL="https://bkszggsfnuchwolklofk.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_4txgi8IpAfRNiW8YFWi4iw__pHDBtQ6";
 const API_URL="https://vne-ai-studio-api.vneglobalservice.workers.dev/";
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-const $=id=>document.getElementById(id);let file=null,mode="background",resultUrl=null;
+const $=id=>document.getElementById(id);
+let file=null,mode="background",resultUrl=null,freePipeline=null;
 function setStatus(t){$("status").textContent=t}
 async function refresh(){const {data:{session}}=await sb.auth.getSession();$("auth").classList.toggle("hidden",!!session);$("app").classList.toggle("hidden",!session);$("logout").hidden=!session}
 $("signup").onclick=async()=>{const {error}=await sb.auth.signUp({email:$("email").value.trim(),password:$("password").value});$("authStatus").textContent=error?.message||"Signup submitted. Check your email to confirm."};
 $("login").onclick=async()=>{const {error}=await sb.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});$("authStatus").textContent=error?.message||"Login successful.";await refresh()};
 $("google").onclick=()=>sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.href}});
 $("logout").onclick=async()=>{await sb.auth.signOut();await refresh()};sb.auth.onAuthStateChange(()=>refresh());refresh();
-function setMode(m){mode=m;$("modeTitle").textContent={background:"Background Studio",enhance:"AI Enhance",portrait:"Pro Portraits",creative:"Creative AI"}[m];$("modeDesc").textContent=m==="background"?"Remove the subject background and export a transparent PNG.":m==="creative"?"Describe an image and generate it with AI.":m==="enhance"?"Send your image for AI enhancement.":"Prepare a professional portrait.";const gen=m==="creative";$("promptWrap").classList.toggle("hidden",!gen);$("adjustWrap").classList.toggle("hidden",gen);$("process").textContent={background:"Remove background",enhance:"Enhance photo",portrait:"Create portrait",creative:"Generate AI photo"}[m];setStatus("")}
-document.querySelectorAll(".tool").forEach(x=>x.onclick=()=>{setMode(x.dataset.mode);$("editor").scrollIntoView({behavior:"smooth"})});setMode("background");
+function selectedEngine(){return document.querySelector('input[name="engine"]:checked')?.value||"free"}
+function setMode(m){mode=m;$("modeTitle").textContent={background:"Background Studio",enhance:"AI Enhance",portrait:"Pro Portraits",creative:"Creative AI"}[m];$("modeDesc").textContent=m==="background"?"Remove the background free on your device, or choose optional Premium Bria processing.":m==="creative"?"Describe an image and generate it with AI.":m==="enhance"?"Send your image for AI enhancement.":"Prepare a professional portrait.";const gen=m==="creative";$("promptWrap").classList.toggle("hidden",!gen);$("adjustWrap").classList.toggle("hidden",gen);$("backgroundOptions").classList.toggle("hidden",m!=="background");$("process").textContent=m==="background"?(selectedEngine()==="free"?"Remove background (Free)":"Remove background (Premium)"):{enhance:"Enhance photo",portrait:"Create portrait",creative:"Generate AI photo"}[m];setStatus("")}
+document.querySelectorAll(".tool").forEach(x=>x.onclick=()=>{setMode(x.dataset.mode);$("editor").scrollIntoView({behavior:"smooth"})});
+document.querySelectorAll('input[name="engine"]').forEach(x=>x.onchange=()=>{if(mode==="background")$("process").textContent=selectedEngine()==="free"?"Remove background (Free)":"Remove background (Premium)"});
+setMode("background");
 $("file").onchange=e=>{file=e.target.files[0];if(!file)return;if(file.size>8*1024*1024){setStatus("Please choose an image smaller than 8 MB.");file=null;return}const u=URL.createObjectURL(file);$("preview").src=u;$("preview").classList.remove("hidden");setStatus("Photo ready.")};
 $("applyPreview").onclick=()=>{$("preview").style.filter=$("effect").value;setStatus("Browser preview effect applied. This is not AI processing.")};
 $("reset").onclick=()=>{file=null;$("file").value="";$("preview").classList.add("hidden");$("result").classList.add("hidden");$("download").classList.add("hidden");$("preview").style.filter="none";if(resultUrl)URL.revokeObjectURL(resultUrl);setStatus("Reset complete.")};
-$("process").onclick=async()=>{try{if(mode!=="creative"&&!file){setStatus("Choose a photo first.");return}if(mode==="creative"&&!$("prompt").value.trim()){setStatus("Enter an image description first.");return}$("process").disabled=true;setStatus("Processing…");
-let response;if(mode==="creative"){response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"generate",prompt:$("prompt").value.trim()+", style: "+$("style").value+", aspect ratio: "+$("ratio").value})})}else{const fd=new FormData();fd.append("image",file);fd.append("action",mode==="background"?"remove-background":"enhance");response=await fetch(API_URL,{method:"POST",body:fd})}
-if(!response.ok){let msg=await response.text();throw new Error(msg||"Request failed ("+response.status+")")}const blob=await response.blob();if(!blob.type.startsWith("image/"))throw new Error("The service did not return an image.");if(resultUrl)URL.revokeObjectURL(resultUrl);resultUrl=URL.createObjectURL(blob);$("result").src=resultUrl;$("result").classList.remove("hidden");$("download").href=resultUrl;$("download").download=mode==="background"?"vne-background-removed.png":"vne-ai-studio-result.png";$("download").textContent="Download "+(mode==="background"?"transparent PNG":"image");$("download").classList.remove("hidden");setStatus("Done. Your image is ready.")}catch(e){setStatus("Could not process image: "+e.message)}finally{$("process").disabled=false}};
+async function runFreeBackgroundRemoval(imageFile){
+  if(!freePipeline){
+    setStatus("Downloading the free AI model for first use. This may take a while…");
+    try{freePipeline=await pipeline("background-removal","Orangebot/ormbg-ONNX",{device:"webgpu",dtype:"fp16"});}
+    catch(webgpuError){setStatus("This device does not support the WebGPU model. Loading the CPU version…");freePipeline=await pipeline("background-removal","Orangebot/ormbg-ONNX",{device:"wasm",dtype:"uint8"});}
+  }
+  setStatus("Running Free AI on your device…");
+  const imageUrl=URL.createObjectURL(imageFile);
+  try{
+    const output=await freePipeline(imageUrl);
+    const raw=Array.isArray(output)?output[0]:output;
+    if(!raw||!raw.data||!raw.width||!raw.height)throw new Error("The AI model returned an unexpected image format.");
+    const canvas=document.createElement("canvas");canvas.width=raw.width;canvas.height=raw.height;
+    const ctx=canvas.getContext("2d");const pixels=new Uint8ClampedArray(raw.data);
+    const imageData=new ImageData(pixels,raw.width,raw.height);ctx.putImageData(imageData,0,0);
+    return await new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("Could not create PNG output.")),"image/png"));
+  }finally{URL.revokeObjectURL(imageUrl)}
+}
+async function runPremiumBackgroundRemoval(imageFile){
+  const fd=new FormData();fd.append("image",imageFile);fd.append("action","remove-background");
+  const response=await fetch(API_URL,{method:"POST",body:fd});
+  if(!response.ok)throw new Error((await response.text())||"Premium API request failed ("+response.status+")");
+  const blob=await response.blob();if(!blob.type.startsWith("image/"))throw new Error("Premium service did not return an image.");return blob;
+}
+$("process").onclick=async()=>{
+ try{
+  if(mode!=="creative"&&!file){setStatus("Choose a photo first.");return}
+  if(mode==="creative"&&!$("prompt").value.trim()){setStatus("Enter an image description first.");return}
+  $("process").disabled=true;let blob;
+  if(mode==="background"){
+    if(selectedEngine()==="free")blob=await runFreeBackgroundRemoval(file);
+    else{setStatus("Sending photo to Premium Bria service…");blob=await runPremiumBackgroundRemoval(file);}
+  }else if(mode==="creative"){
+    setStatus("Generating image…");const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"generate",prompt:$("prompt").value.trim()+", style: "+$("style").value+", aspect ratio: "+$("ratio").value})});
+    if(!response.ok)throw new Error((await response.text())||"Request failed ("+response.status+")");blob=await response.blob();
+  }else{
+    setStatus("Processing image…");const fd=new FormData();fd.append("image",file);fd.append("action",mode==="portrait"?"portrait":"enhance");const response=await fetch(API_URL,{method:"POST",body:fd});
+    if(!response.ok)throw new Error((await response.text())||"Request failed ("+response.status+")");blob=await response.blob();
+  }
+  if(!blob.type.startsWith("image/"))throw new Error("The service did not return an image.");
+  if(resultUrl)URL.revokeObjectURL(resultUrl);resultUrl=URL.createObjectURL(blob);$("result").src=resultUrl;$("result").classList.remove("hidden");$("download").href=resultUrl;
+  $("download").download=mode==="background"?"vne-background-removed.png":"vne-ai-studio-result.png";$("download").textContent="Download "+(mode==="background"?"transparent PNG":"image");$("download").classList.remove("hidden");setStatus("Done. Your image is ready.");
+ }catch(e){setStatus("Could not process image: "+e.message)}
+ finally{$("process").disabled=false}
+};
 </script></body></html>
