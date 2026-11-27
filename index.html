@@ -46,8 +46,8 @@ label{font-weight:700;font-size:13px}.row{display:flex;gap:10px;flex-wrap:wrap}.
 <div id="promptWrap" class="hidden"><label for="prompt">Describe your image</label><textarea id="prompt" rows="4" placeholder="A cinematic professional portrait in a modern office, soft natural light..."></textarea><label>Style</label><select id="style"><option>Photorealistic</option><option>Studio portrait</option><option>3D illustration</option><option>Anime</option><option>Watercolor</option></select><label>Aspect ratio</label><select id="ratio"><option value="1:1">Square 1:1</option><option value="4:5">Portrait 4:5</option><option value="16:9">Landscape 16:9</option></select></div>
 <div id="backgroundOptions">
 <label>Background removal engine</label>
-<div class="choice"><label><input type="radio" name="engine" value="free" checked> Free AI – runs on this device</label><p class="muted">Model downloads the first time. Photo stays in your browser.</p></div>
-<div class="choice"><label><input type="radio" name="engine" value="premium"> Premium – Cloudflare + Bria</label><p class="muted">Uses the configured Worker API and may incur per-image charges.</p></div>
+<div class="choice"><label><input type="radio" name="engine" value="free" checked> Free – Browser</label></div>
+<div class="choice"><label><input type="radio" name="engine" value="premium"> Premium AI</label><p class="muted">Premium AI image enhancement. Charges may apply.</p></div>
 </div>
 <div id="adjustWrap"><label>Quick preview effect</label><select id="effect"><option value="none">Original</option><option value="grayscale(1)">Black & white</option><option value="brightness(1.15) contrast(1.08)">Brighten</option><option value="sepia(.65)">Warm vintage</option></select><button class="secondary" id="applyPreview">Apply preview</button></div>
 <div class="row"><button id="process">Remove background (Free)</button><button class="secondary" id="reset">Reset</button></div>
